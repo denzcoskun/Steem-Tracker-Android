@@ -61,7 +61,6 @@ public class ProfileActivity extends AppCompatActivity {
                 .centerCrop()
                 .into(coverImage);
 
-
         textViewUsername.setText(profileModel.name);
         textViewAbout.setText(profileModel.about);
         textViewLocation.setText(profileModel.location);
