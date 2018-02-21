@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
-    Context context = null;
+
     public TabsPagerAdapter(FragmentManager fragmentManager, Context context ) {
         super(fragmentManager);
     }
@@ -29,12 +29,12 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
 
-        return 3;
+        return 1;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Posts";
+        return "Rewards";
     }
 
 }

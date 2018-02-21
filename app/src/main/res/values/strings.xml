@@ -2,7 +2,11 @@
     <string name="app_name">SteemTrackerAndroid</string>
 
     <string name="loading">Loading</string>
+
     <string name="steemjs_url">https://api.steemjs.com/</string>
+    <string name="api_coin_market">https://api.coinmarketcap.com/v1/ticker/</string>
+
+
     <string name="search">Search</string>
     <string name="get_info_text">Please enter username which want to get info</string>
 </resources>

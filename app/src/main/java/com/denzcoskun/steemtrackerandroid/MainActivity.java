@@ -11,15 +11,13 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.denzcoskun.steemtrackerandroid.models.ProfileModel;
 import com.denzcoskun.steemtrackerandroid.models.UserModel;
+import com.denzcoskun.steemtrackerandroid.profile.ProfileActivity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                         userModel.profileModel = mapper.readValue(profile.toString(), ProfileModel.class);
                         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                         intent.putExtra("model",userModel.profileModel);
+                        intent.putExtra("balance",userModel.balance);
+                        intent.putExtra("sbdBalance",userModel.sbdBalance);
                         startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
