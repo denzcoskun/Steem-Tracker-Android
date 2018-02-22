@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark"
     tools:context="com.denzcoskun.steemtrackerandroid.profile.ProfileActivity">
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -38,7 +35,7 @@
                             android:layout_height="wrap_content">
                             <ImageButton
                                 android:id="@+id/back_button"
-                                style="?android:borderlessButtonStyle"
+                                android:background="@null"
                                 android:src="@drawable/ic_back_button"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content" />
@@ -103,6 +100,7 @@
                         app:tabIndicatorColor="@android:color/white"
                         app:tabIndicatorHeight="3dp"/>
                 </LinearLayout>
+
             </RelativeLayout>
             <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -112,5 +110,4 @@
                 tools:context="net.voidynullness.android.tabitytabs.TabLayoutActivity">
             </android.support.v4.view.ViewPager>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</FrameLayout>
+</LinearLayout>

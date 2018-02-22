@@ -1,14 +1,11 @@
 package com.denzcoskun.steemtrackerandroid.profile.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.denzcoskun.steemtrackerandroid.profile.fragments.PostFragment;
-
-import java.util.List;
+import com.denzcoskun.steemtrackerandroid.profile.fragments.RewardFragment;
 
 /**
  * Created by Denx on 21.02.2018.
@@ -23,7 +20,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        return new PostFragment();
+        return new RewardFragment();
     }
 
     @Override

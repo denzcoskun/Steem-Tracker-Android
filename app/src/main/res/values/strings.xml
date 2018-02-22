@@ -9,4 +9,15 @@
 
     <string name="search">Search</string>
     <string name="get_info_text">Please enter username which want to get info</string>
+
+    <string name="reward_text">Rewarding Open Source Contributors.</string>
+    <string name="steem">STEEM</string>
+    <string name="sbd">SBD</string>
+
+    <string name="usd_symbol">$</string>
+    <string name="eur_symbol">€</string>
+    <string name="try_symbol">₺</string>
+    <string name="rub_symbol">₽</string>
+
+
 </resources>

@@ -66,10 +66,9 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.back_button)
     ImageButton backButton;
 
-    ProgressDialog pDialog;
-    String balance;
-    String sbdbalance;
-    ConvertModel convertModel;
+    public static String balance;
+    public static String sbdbalance;
+    public static ConvertModel convertModel;
     private TabsPagerAdapter tabsPagerAdapter = null;
 
     @Override
@@ -78,9 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage(getString(R.string.loading));
-        pDialog.setCancelable(false);
+
 
         linearLayoutProfile.post((Runnable) () -> {
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(linearLayoutProfile.getWidth(), linearLayoutProfile.getHeight());
@@ -89,7 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         ProfileModel profileModel = (ProfileModel) getIntent().getSerializableExtra("model");
         balance = getIntent().getStringExtra("balance");
-        sbdbalance = getIntent().getStringExtra("sbdbalance");
+        sbdbalance = getIntent().getStringExtra("sbdBalance");
 
         Picasso.with(this)
                 .load(profileModel.profileImage)
@@ -117,53 +114,5 @@ public class ProfileActivity extends AppCompatActivity {
 
         backButton.setOnClickListener(v -> finish());
 
-    }
-
-    private void makeRequestConvert(String balance, String currency){
-        showpDialog();
-        String dayUrl = getString(R.string.api_coin_market)+"/?convert=" + currency;
-        JsonArrayRequest userRequest = new JsonArrayRequest
-                (Request.Method.GET, dayUrl, null, response -> {
-                    ObjectMapper mapper = new ObjectMapper();
-                    try {
-                        JSONArray jsonArray = response;
-                        JSONObject jsonObject = jsonArray.getJSONObject(0);
-                        convertModel = mapper.readValue(jsonObject.toString(), ConvertModel.class);
-                        if (currency.equalsIgnoreCase(CurrencyConstants.LIRA)){
-                            calculateAmount(balance, convertModel.priceTry);
-                        }else if(currency.equalsIgnoreCase(CurrencyConstants.EURO)){
-                            calculateAmount(balance, convertModel.priceEur);
-                        }else if(currency.equalsIgnoreCase(CurrencyConstants.RUBLE)){
-                            calculateAmount(balance, convertModel.priceRub);
-                        }else{
-                            calculateAmount(balance, convertModel.priceUsd);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    hidepDialog();
-                }, error -> {
-                    VolleyLog.d("TAG", "Error: " + error.getMessage());
-                    System.out.println( error.getMessage());
-                    Toast.makeText(getApplicationContext(),
-                            error.getMessage(), Toast.LENGTH_SHORT).show();
-                    hidepDialog();
-                });
-        AppSingleton.getInstance().addToRequestQueue(userRequest);
-    }
-
-    private void showpDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hidepDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
-
-    public String calculateAmount(String balance, String value){
-        Double total = Double.parseDouble(balance)*Double.parseDouble(value);
-        return Double.toString(total);
     }
 }
