@@ -1,6 +1,8 @@
 package com.denzcoskun.steemtrackerandroid;
 
 import android.app.ProgressDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,9 +13,11 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.denzcoskun.steemtrackerandroid.helpers.DataHelper;
 import com.denzcoskun.steemtrackerandroid.models.ProfileModel;
 import com.denzcoskun.steemtrackerandroid.models.UserModel;
 import com.denzcoskun.steemtrackerandroid.profile.ProfileActivity;
+import com.denzcoskun.steemtrackerandroid.widget.SteemAppWidget;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
@@ -39,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setResult(RESULT_CANCELED);
+
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage(getString(R.string.loading));
         pDialog.setCancelable(false);
 
         buttonSearch.setOnClickListener(v -> makeRequestUser(editTextUsername.getText().toString()));
+
     }
 
     private void makeRequestUser(String username){
@@ -57,6 +64,15 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray jsonArray = response;
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         userModel = mapper.readValue(jsonObject.toString(), UserModel.class);
+                        DataHelper dataHelper = new DataHelper(this);
+                        dataHelper.setModel(userModel);
+                        if(userModel != null){
+                            Intent intent = new Intent(this, SteemAppWidget.class);
+                            intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+                            int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), SteemAppWidget.class));
+                            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+                            sendBroadcast(intent);
+                        }
                         JSONObject jsonMetadata = userModel.jsonMetadata;
                         JSONObject profile = jsonMetadata.getJSONObject("profile");
                         userModel.profileModel = mapper.readValue(profile.toString(), ProfileModel.class);
@@ -88,4 +104,5 @@ public class MainActivity extends AppCompatActivity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
 }

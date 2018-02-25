@@ -10,5 +10,6 @@ public class CurrencyConstants {
     public static String EURO = "EUR";
     public static String LIRA = "TRY";
     public static String RUBLE = "RUB";
+    public static String KRWON = "KRW";
 
 }

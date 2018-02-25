@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark"
+    android:fitsSystemWindows="true"
     tools:context="com.denzcoskun.steemtrackerandroid.profile.ProfileActivity">
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,6 +80,7 @@
                         android:paddingTop="3dp"
                         android:layout_height="wrap_content">
                         <ImageView
+                            android:id="@+id/image_view_location"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_location"/>

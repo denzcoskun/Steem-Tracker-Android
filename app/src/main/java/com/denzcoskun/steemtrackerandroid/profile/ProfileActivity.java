@@ -1,38 +1,23 @@
 package com.denzcoskun.steemtrackerandroid.profile;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.media.Image;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.ViewGroup;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.denzcoskun.steemtrackerandroid.AppSingleton;
-import com.denzcoskun.steemtrackerandroid.MainActivity;
 import com.denzcoskun.steemtrackerandroid.R;
-import com.denzcoskun.steemtrackerandroid.constants.CurrencyConstants;
 import com.denzcoskun.steemtrackerandroid.models.ConvertModel;
 import com.denzcoskun.steemtrackerandroid.models.ProfileModel;
-import com.denzcoskun.steemtrackerandroid.models.UserModel;
 import com.denzcoskun.steemtrackerandroid.profile.adapters.TabsPagerAdapter;
 import com.denzcoskun.steemtrackerandroid.transformations.PicassoCircleTransformation;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +48,9 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.pager)
     ViewPager viewPager;
 
+    @BindView(R.id.image_view_location)
+    ImageView imageViewLocation;
+
     @BindView(R.id.back_button)
     ImageButton backButton;
 
@@ -76,7 +64,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
-
 
 
         linearLayoutProfile.post((Runnable) () -> {
@@ -99,15 +86,28 @@ public class ProfileActivity extends AppCompatActivity {
                 .centerCrop()
                 .into(coverImage);
 
-        textViewUsername.setText(profileModel.name);
-        textViewAbout.setText(profileModel.about);
-        textViewLocation.setText(profileModel.location);
+        if (profileModel.name == null) {
+            textViewUsername.setVisibility(View.GONE);
+        } else {
+            textViewUsername.setText(profileModel.name);
+        }
+
+        if (profileModel.about == null) {
+            textViewAbout.setVisibility(View.GONE);
+        } else {
+            textViewAbout.setText(profileModel.about);
+        }
+
+        if (profileModel.location == null) {
+            textViewLocation.setVisibility(View.GONE);
+            imageViewLocation.setVisibility(View.GONE);
+        } else {
+            textViewLocation.setText(profileModel.location);
+        }
 
         tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(), getBaseContext());
 
-        for (int i = 0; i < 3; i++) {
-            tabLayout.addTab(tabLayout.newTab());
-        }
+        tabLayout.addTab(tabLayout.newTab());
 
         viewPager.setAdapter(tabsPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

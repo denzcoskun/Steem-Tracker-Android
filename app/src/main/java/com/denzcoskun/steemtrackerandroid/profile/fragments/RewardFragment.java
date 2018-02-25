@@ -1,14 +1,12 @@
 package com.denzcoskun.steemtrackerandroid.profile.fragments;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,14 +18,20 @@ import com.denzcoskun.steemtrackerandroid.constants.CoinConstants;
 import com.denzcoskun.steemtrackerandroid.constants.CurrencyConstants;
 import com.denzcoskun.steemtrackerandroid.models.ConvertModel;
 import com.denzcoskun.steemtrackerandroid.profile.ProfileActivity;
+import com.denzcoskun.steemtrackerandroid.profile.fragments.adapters.CurrencyAdapter;
+import com.denzcoskun.steemtrackerandroid.profile.fragments.models.CurrencyModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import info.hoang8f.android.segmented.SegmentedGroup;
 
 /**
  * Created by Denx on 21.02.2018.
@@ -35,69 +39,40 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class RewardFragment extends Fragment {
 
-    @BindView(R.id.segmented)
-    SegmentedGroup segmentedGroup;
-
-    @BindView(R.id.usd_button)
-    RadioButton usdButton;
-
-    @BindView(R.id.euro_button)
-    RadioButton eurButton;
-
-    @BindView(R.id.try_button)
-    RadioButton tryButton;
-
-    @BindView(R.id.rub_button)
-    RadioButton rubButton;
-
-    @BindView(R.id.text_view_steem_value)
-    TextView textViewSteemValue;
-
-    @BindView(R.id.text_view_sbd_value)
-    TextView textViewSbdValue;
-
-    @BindView(R.id.text_view_calculated_value)
-    TextView textViewCalculatedValue;
+    @BindView(R.id.currency_list)
+    ListView currencyList;
 
     ProgressDialog pDialog;
+    List<CurrencyModel> currencyModels;
+    CurrencyAdapter currencyAdapter;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        segmentedGroup.setTintColor(Color.parseColor("#04d6a7"), Color.parseColor("#424242"));
+        currencyModels = new ArrayList<>();
+        currencyModels.add(new CurrencyModel(R.drawable.sbd,
+                getString(R.string.steem),
+                "",
+                ProfileActivity.balance));
 
+        currencyModels.add(new CurrencyModel(R.drawable.sbd,
+                getString(R.string.sbd),
+                getString(R.string.sbd_text),
+                ProfileActivity.sbdbalance));
+
+        currencyAdapter = new CurrencyAdapter(getActivity(), currencyModels);
+        currencyList.setAdapter(currencyAdapter);
 
         pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage(getString(R.string.loading));
         pDialog.setCancelable(false);
 
-        makeRequestConvert(ProfileActivity.sbdbalance,CurrencyConstants.DOLLAR);
-
-        textViewSteemValue.setText(ProfileActivity.balance);
-        textViewSbdValue.setText(ProfileActivity.sbdbalance);
-
-        usdButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
-                makeRequestConvert(ProfileActivity.sbdbalance,CurrencyConstants.DOLLAR);
-            }
-        });
-        tryButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
-                makeRequestConvert(ProfileActivity.sbdbalance,CurrencyConstants.LIRA);
-            }
-        });
-        eurButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
-                makeRequestConvert(ProfileActivity.sbdbalance,CurrencyConstants.EURO);
-            }
-        });
-        rubButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
-                makeRequestConvert(ProfileActivity.sbdbalance,CurrencyConstants.RUBLE);
-            }
-        });
-
+        makeRequestConvert(ProfileActivity.sbdbalance, CurrencyConstants.DOLLAR);
+        makeRequestConvert(ProfileActivity.sbdbalance, CurrencyConstants.LIRA);
+        makeRequestConvert(ProfileActivity.sbdbalance, CurrencyConstants.EURO);
+        makeRequestConvert(ProfileActivity.sbdbalance, CurrencyConstants.RUBLE);
+        makeRequestConvert(ProfileActivity.sbdbalance, CurrencyConstants.KRWON);
 
     }
 
@@ -108,9 +83,9 @@ public class RewardFragment extends Fragment {
         return view;
     }
 
-    private void makeRequestConvert(String balance, String currency){
+    private void makeRequestConvert(String balance, String currency) {
         showpDialog();
-        String dayUrl = getString(R.string.api_coin_market)+ CoinConstants.STEEMDOLLAR+"/?convert=" + currency;
+        String dayUrl = getString(R.string.api_coin_market) + CoinConstants.STEEMDOLLAR + "/?convert=" + currency;
         JsonArrayRequest userRequest = new JsonArrayRequest
                 (Request.Method.GET, dayUrl, null, response -> {
                     ObjectMapper mapper = new ObjectMapper();
@@ -118,22 +93,47 @@ public class RewardFragment extends Fragment {
                         JSONArray jsonArray = response;
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         ProfileActivity.convertModel = mapper.readValue(jsonObject.toString(), ConvertModel.class);
-                        if (currency.equalsIgnoreCase(CurrencyConstants.LIRA)){
-                            textViewCalculatedValue.setText(calculateAmount(balance, ProfileActivity.convertModel.priceTry)+" "+getString(R.string.try_symbol));
-                        }else if(currency.equalsIgnoreCase(CurrencyConstants.EURO)){
-                            textViewCalculatedValue.setText(calculateAmount(balance, ProfileActivity.convertModel.priceEur)+" "+getString(R.string.eur_symbol));
-                        }else if(currency.equalsIgnoreCase(CurrencyConstants.RUBLE)){
-                            textViewCalculatedValue.setText(calculateAmount(balance, ProfileActivity.convertModel.priceRub)+" "+getString(R.string.rub_symbol));
-                        }else if(currency.equalsIgnoreCase(CurrencyConstants.DOLLAR)){
-                            textViewCalculatedValue.setText(calculateAmount(balance, ProfileActivity.convertModel.priceUsd)+" "+getString(R.string.usd_symbol));
+                        if (currency.equalsIgnoreCase(CurrencyConstants.LIRA)) {
+                            currencyModels.add(new CurrencyModel(R.drawable.tury,
+                                    getString(R.string.try_currency),
+                                    getString(R.string.try_text),
+                                    new DecimalFormat("##,##0.000").format(calculateAmount(balance, ProfileActivity.convertModel.priceTry))
+                                            + " " + getString(R.string.try_symbol)));
+                        } else if (currency.equalsIgnoreCase(CurrencyConstants.EURO)) {
+                            currencyModels.add(new CurrencyModel(R.drawable.eur,
+                                    getString(R.string.eur_currency),
+                                    getString(R.string.eur_text),
+                                    new DecimalFormat("##,##0.000").format(calculateAmount(balance, ProfileActivity.convertModel.priceEur))
+                                            + " " + getString(R.string.eur_symbol)));
+                        } else if (currency.equalsIgnoreCase(CurrencyConstants.RUBLE)) {
+                            currencyModels.add(new CurrencyModel(R.drawable.rus,
+                                    getString(R.string.rub_currency),
+                                    getString(R.string.rub_text),
+                                    new DecimalFormat("##,##0.000").format(calculateAmount(balance, ProfileActivity.convertModel.priceRub))
+                                            + " " + getString(R.string.rub_symbol)));
+                        } else if (currency.equalsIgnoreCase(CurrencyConstants.DOLLAR)) {
+                            currencyModels.add(new CurrencyModel(R.drawable.usa,
+                                    getString(R.string.usd_currency),
+                                    getString(R.string.usd_text),
+                                    new DecimalFormat("##,##0.000").format(calculateAmount(balance, ProfileActivity.convertModel.priceUsd))
+                                     + " " + getString(R.string.usd_symbol)));
+                        }else if (currency.equalsIgnoreCase(CurrencyConstants.KRWON)) {
+                            currencyModels.add(new CurrencyModel(R.drawable.krw,
+                                    getString(R.string.krw_currency),
+                                    getString(R.string.krw_text),
+                                    new DecimalFormat("##,##0.000").format(calculateAmount(balance, ProfileActivity.convertModel.priceKrw))
+                                            + " " + getString(R.string.krw_symbol)));
+                        }
+                        currencyAdapter.notifyDataSetChanged();
+                        if (currencyModels.size() == 7) {
+                            hidepDialog();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    hidepDialog();
                 }, error -> {
                     VolleyLog.d("TAG", "Error: " + error.getMessage());
-                    System.out.println( error.getMessage());
+                    System.out.println(error.getMessage());
                     Toast.makeText(getActivity().getApplicationContext(),
                             error.getMessage(), Toast.LENGTH_SHORT).show();
                     hidepDialog();
@@ -151,8 +151,8 @@ public class RewardFragment extends Fragment {
             pDialog.dismiss();
     }
 
-    public String calculateAmount(String balance, String value){
-        Double total = Double.parseDouble(balance.substring(0,4))*Double.parseDouble(value);
-        return Double.toString(total);
+    public double calculateAmount(String balance, String value) {
+        Double total = Double.parseDouble(balance.substring(0, 4)) * Double.parseDouble(value);
+        return total;
     }
 }

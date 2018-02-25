@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SteemTrackerAndroid</string>
+    <string name="app_name">Steem Tracker</string>
 
     <string name="loading">Loading</string>
 
@@ -11,13 +11,37 @@
     <string name="get_info_text">Please enter username which want to get info</string>
 
     <string name="reward_text">Rewarding Open Source Contributors.</string>
+
     <string name="steem">STEEM</string>
     <string name="sbd">SBD</string>
+    <string name="sbd_text">Steem Dollar</string>
 
     <string name="usd_symbol">$</string>
+    <string name="usd_currency">USD</string>
+    <string name="usd_text">United States Dollar</string>
+
     <string name="eur_symbol">€</string>
+    <string name="eur_currency">EUR</string>
+    <string name="eur_text">Euro</string>
+
     <string name="try_symbol">₺</string>
+    <string name="try_currency">TRY</string>
+    <string name="try_text">Turkish Lira</string>
+
     <string name="rub_symbol">₽</string>
+    <string name="rub_currency">RUB</string>
+    <string name="rub_text">Russian Ruble</string>
+
+    <string name="krw_symbol">₩</string>
+    <string name="krw_currency">KRW</string>
+    <string name="krw_text">South Korean Won</string>
+
+    <string name="appwidget_steem_text">Steem</string>
+    <string name="appwidget_sbd_text">SBD</string>
+    <string name="add_widget">Add widget</string>
+    <string name="user_not_found">User not found</string>
+    <string name="steem_not_found">-</string>
+    <string name="sbd_not_found">-</string>
 
 
 </resources>

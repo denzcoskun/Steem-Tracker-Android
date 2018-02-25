@@ -80,5 +80,13 @@ public class ConvertModel {
     @JsonProperty("market_cap_rub")
     public String marketCapRub;
 
+    @JsonProperty("price_krw")
+    public String priceKrw;
+
+    @JsonProperty("24h_volume_krw")
+    public String h24VolumeKrw;
+
+    @JsonProperty("market_cap_krw")
+    public String marketCapKrw;
 
 }
