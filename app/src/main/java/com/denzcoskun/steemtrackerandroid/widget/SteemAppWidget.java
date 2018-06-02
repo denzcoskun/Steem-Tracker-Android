@@ -7,7 +7,7 @@ import android.widget.RemoteViews;
 
 import com.denzcoskun.steemtrackerandroid.R;
 import com.denzcoskun.steemtrackerandroid.helpers.DataHelper;
-import com.denzcoskun.steemtrackerandroid.models.UserModel;
+import com.denzcoskun.steemtrackerandroid.screens.main.models.UserModel;
 
 /**
  * Implementation of App Widget functionality.

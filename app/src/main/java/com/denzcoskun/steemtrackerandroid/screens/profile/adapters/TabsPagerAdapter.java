@@ -1,11 +1,11 @@
-package com.denzcoskun.steemtrackerandroid.profile.adapters;
+package com.denzcoskun.steemtrackerandroid.screens.profile.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.denzcoskun.steemtrackerandroid.profile.fragments.RewardFragment;
+import com.denzcoskun.steemtrackerandroid.screens.profile.fragments.RewardFragment;
 
 /**
  * Created by Denx on 21.02.2018.
@@ -13,13 +13,12 @@ import com.denzcoskun.steemtrackerandroid.profile.fragments.RewardFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
-    public TabsPagerAdapter(FragmentManager fragmentManager, Context context ) {
+    public TabsPagerAdapter(FragmentManager fragmentManager, Context context) {
         super(fragmentManager);
     }
 
     @Override
     public Fragment getItem(int position) {
-
         return new RewardFragment();
     }
 

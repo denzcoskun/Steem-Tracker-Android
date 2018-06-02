@@ -1,4 +1,4 @@
-package com.denzcoskun.steemtrackerandroid.transformations;
+package com.denzcoskun.steemtrackerandroid.helpers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

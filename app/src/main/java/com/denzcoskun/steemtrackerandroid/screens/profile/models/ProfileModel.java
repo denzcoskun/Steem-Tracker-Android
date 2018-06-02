@@ -1,5 +1,6 @@
-package com.denzcoskun.steemtrackerandroid.models;
+package com.denzcoskun.steemtrackerandroid.screens.profile.models;
 
+import com.denzcoskun.libdenx.models.BaseResponseModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
  * Created by Denx on 18.02.2018.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ProfileModel implements Serializable{
+public class ProfileModel extends BaseResponseModel implements Serializable{
 
     @JsonProperty("name")
     public String name;
