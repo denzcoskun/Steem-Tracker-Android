@@ -1,6 +1,6 @@
-package com.denzcoskun.steemtrackerandroid.profile;
+package com.denzcoskun.steemtrackerandroid.screens.profile.activities;
 
-import android.media.Image;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,17 +12,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.denzcoskun.libdenx.activities.BaseActivity;
 import com.denzcoskun.steemtrackerandroid.R;
-import com.denzcoskun.steemtrackerandroid.models.ConvertModel;
-import com.denzcoskun.steemtrackerandroid.models.ProfileModel;
-import com.denzcoskun.steemtrackerandroid.profile.adapters.TabsPagerAdapter;
-import com.denzcoskun.steemtrackerandroid.transformations.PicassoCircleTransformation;
+import com.denzcoskun.steemtrackerandroid.screens.profile.models.ConvertModel;
+import com.denzcoskun.steemtrackerandroid.screens.profile.models.ProfileModel;
+import com.denzcoskun.steemtrackerandroid.screens.profile.adapters.TabsPagerAdapter;
+import com.denzcoskun.steemtrackerandroid.helpers.PicassoCircleTransformation;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
     @BindView(R.id.profile_image)
     ImageView profileImage;
@@ -60,13 +61,10 @@ public class ProfileActivity extends AppCompatActivity {
     private TabsPagerAdapter tabsPagerAdapter = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        ButterKnife.bind(this);
+    protected void onViewReady(Bundle savedInstanceState, Intent intent){
+        super.onViewReady(savedInstanceState,intent);
 
-
-        linearLayoutProfile.post((Runnable) () -> {
+        linearLayoutProfile.post(() -> {
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(linearLayoutProfile.getWidth(), linearLayoutProfile.getHeight());
             coverImage.setLayoutParams(layoutParams);
         });
@@ -113,6 +111,11 @@ public class ProfileActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         backButton.setOnClickListener(v -> finish());
-
     }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_profile;
+    }
+
 }

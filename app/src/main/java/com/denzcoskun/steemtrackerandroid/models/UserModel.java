@@ -1,18 +1,17 @@
 package com.denzcoskun.steemtrackerandroid.models;
 
+import com.denzcoskun.libdenx.models.BaseResponseModel;
+import com.denzcoskun.steemtrackerandroid.screens.profile.models.ProfileModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
-
-import java.io.Serializable;
 
 /**
  * Created by Denx on 18.02.2018.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserModel {
+public class UserModel extends BaseResponseModel{
 
     @JsonProperty("name")
     public String name;

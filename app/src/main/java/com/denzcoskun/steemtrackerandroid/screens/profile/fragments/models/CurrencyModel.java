@@ -1,4 +1,4 @@
-package com.denzcoskun.steemtrackerandroid.profile.fragments.models;
+package com.denzcoskun.steemtrackerandroid.screens.profile.fragments.models;
 
 /**
  * Created by Denx on 24.02.2018.

@@ -1,12 +1,13 @@
-package com.denzcoskun.steemtrackerandroid.models;
+package com.denzcoskun.steemtrackerandroid.screens.profile.models;
 
+import com.denzcoskun.libdenx.models.BaseResponseModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Denx on 21.02.2018.
  */
 
-public class ConvertModel {
+public class ConvertModel extends BaseResponseModel{
 
     @JsonProperty("id")
     public String id;

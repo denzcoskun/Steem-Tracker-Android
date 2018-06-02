@@ -1,4 +1,4 @@
-package com.denzcoskun.steemtrackerandroid.profile.fragments.adapters;
+package com.denzcoskun.steemtrackerandroid.screens.profile.fragments.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.denzcoskun.steemtrackerandroid.R;
-import com.denzcoskun.steemtrackerandroid.profile.fragments.models.CurrencyModel;
+import com.denzcoskun.steemtrackerandroid.screens.profile.fragments.models.CurrencyModel;
 
 import java.util.List;
 

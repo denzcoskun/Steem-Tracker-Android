@@ -8,7 +8,7 @@
     android:paddingRight="16dp"
     android:paddingLeft="16dp"
     android:background="@color/colorPrimary"
-    tools:context="com.denzcoskun.steemtrackerandroid.MainActivity">
+    tools:context=".activities.MainActivity">
     <LinearLayout
         android:paddingTop="30dp"
         android:gravity="center"
