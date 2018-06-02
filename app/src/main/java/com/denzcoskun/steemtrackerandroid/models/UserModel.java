@@ -1,4 +1,4 @@
-package com.denzcoskun.steemtrackerandroid.screens.main.models;
+package com.denzcoskun.steemtrackerandroid.models;
 
 import com.denzcoskun.libdenx.models.BaseResponseModel;
 import com.denzcoskun.steemtrackerandroid.screens.profile.models.ProfileModel;

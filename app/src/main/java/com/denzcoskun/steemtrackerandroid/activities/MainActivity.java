@@ -1,4 +1,4 @@
-package com.denzcoskun.steemtrackerandroid.screens.main.activities;
+package com.denzcoskun.steemtrackerandroid.activities;
 
 import android.app.ProgressDialog;
 import android.appwidget.AppWidgetManager;
@@ -12,7 +12,7 @@ import com.denzcoskun.libdenx.activities.BaseActivity;
 import com.denzcoskun.steemtrackerandroid.R;
 import com.denzcoskun.steemtrackerandroid.helpers.DataHelper;
 import com.denzcoskun.steemtrackerandroid.screens.profile.models.ProfileModel;
-import com.denzcoskun.steemtrackerandroid.screens.main.models.UserModel;
+import com.denzcoskun.steemtrackerandroid.models.UserModel;
 import com.denzcoskun.steemtrackerandroid.screens.profile.activities.ProfileActivity;
 import com.denzcoskun.steemtrackerandroid.widget.SteemAppWidget;
 import com.fasterxml.jackson.databind.ObjectMapper;

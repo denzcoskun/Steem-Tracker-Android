@@ -3,7 +3,7 @@ package com.denzcoskun.steemtrackerandroid.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.denzcoskun.steemtrackerandroid.screens.main.models.UserModel;
+import com.denzcoskun.steemtrackerandroid.models.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
